@@ -2,7 +2,7 @@ import {Pokemon} from '@/common/interface/pokemon';
 import {formatFirstLetterToUpperCase} from '@/util';
 import React, {useMemo} from 'react';
 import {Image, TouchableOpacityProps} from 'react-native';
-import {Container, TextContainer, Name, PokemonNumber} from './styles';
+import {Container, TextContainer, Name, PokemonNumber, styles} from './styles';
 
 interface Props extends TouchableOpacityProps {
   index: number;
@@ -17,7 +17,7 @@ const PokemonCard: React.FC<Props> = ({data, index, ...rest}) => {
   }, [name]);
 
   const pokemonNumber = useMemo(() => {
-    return String(id).length === 3 || String(id).length === 4
+    return String(id).length >= 3
       ? id
       : String(id).length === 2
       ? `0${id}`
@@ -25,7 +25,12 @@ const PokemonCard: React.FC<Props> = ({data, index, ...rest}) => {
   }, [id]);
 
   return (
-    <Container index={index} type={types[0]} {...rest} activeOpacity={0.7}>
+    <Container
+      index={index}
+      type={types[0]}
+      {...rest}
+      activeOpacity={0.7}
+      style={styles.shadow}>
       <Image
         source={{
           uri: image,

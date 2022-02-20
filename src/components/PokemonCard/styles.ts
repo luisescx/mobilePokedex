@@ -1,9 +1,22 @@
 import styled from 'styled-components/native';
-
+import {StyleSheet} from 'react-native';
 interface Props {
   index: number;
   type: string;
 }
+
+export const styles = StyleSheet.create({
+  shadow: {
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    color: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+});
 
 export const Container = styled.TouchableOpacity.attrs(() => {})<Props>`
   border-radius: 20px;
@@ -19,8 +32,8 @@ export const Container = styled.TouchableOpacity.attrs(() => {})<Props>`
 
 export const TextContainer = styled.View`
   margin-top: 15px;
-  align-items: 120px;
   align-items: center;
+  width: 120px;
 `;
 
 export const Name = styled.Text`
