@@ -2,68 +2,154 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Pokemon} from '@/common/interface/pokemon';
 import getPokemonsUseCase from '@/useCases/GetPokemons';
 import InputHome from '@/components/InputHome';
-import {Container, Title, Header, SubTitle, PokeballImage} from './styles';
-import {View, FlatList} from 'react-native';
+import {
+  Container,
+  Title,
+  Header,
+  SubTitle,
+  PokeballImage,
+  SyncButton,
+  SyncIcon,
+} from './styles';
+import {View, FlatList, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import PokemonCard from '@/components/PokemonCard';
 import getPokemonUseCase from '@/useCases/getPokemon';
 import {getPokemonIdByUrlString} from '@/util';
+import Loading from '@/components/Loading';
+import Skeleton from '@/components/Skeleton';
+import Loader from '@/components/Skeleton/Loader';
+import ErrorHandler from '@/components/ErrorHandler';
+import NotFoundPokemon from '@/components/NotFoundPokemon';
 
 const Home: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [offset, setOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [isPokemonNotFound, setIsPokemonNotFound] = useState(false);
 
   const handlePokemons = useCallback(async () => {
-    const data = await getPokemonsUseCase({offset: 0, limit: 20});
+    setLoading(true);
+
+    const data = await getPokemonsUseCase({offset: offset, limit: 20});
 
     if (data?.results) {
-      const resultPokemons: Pokemon[] = [];
+      const resultPokemons = isSearch ? [] : [...pokemons];
 
       for (let index = 0; index < data.results.length; index++) {
         const {url} = data.results[index];
 
         const id = getPokemonIdByUrlString(url);
         const pokemon = await getPokemonUseCase(id);
-        resultPokemons.push({...pokemon});
+        resultPokemons.push({...pokemon!});
       }
 
       setPokemons(resultPokemons);
+      setOffset(oldValue => oldValue + 20);
+      setIsSearch(false);
+      setIsFirstRender(false);
+      setLoading(false);
+      setIsPokemonNotFound(false);
+
+      return;
     }
-  }, []);
+
+    setIsError(true);
+    setIsFirstRender(true);
+    setOffset(0);
+    setLoading(false);
+    setIsPokemonNotFound(false);
+  }, [offset, pokemons, isSearch]);
 
   const renderItem = useCallback(({item, index}) => {
     return <PokemonCard index={index} data={item} />;
   }, []);
 
-  useEffect(() => {
-    handlePokemons();
+  const getPokemonsBySyncButton = useCallback(async () => {
+    setIsFirstRender(true);
+
+    await handlePokemons();
   }, [handlePokemons]);
 
+  const handlePokemonSearch = useCallback(async (value: string) => {
+    setIsFirstRender(true);
+    const pokemon = await getPokemonUseCase(value);
+
+    if (pokemon) {
+      setPokemons([{...pokemon}]);
+      setIsPokemonNotFound(false);
+    } else {
+      setIsPokemonNotFound(true);
+      setPokemons([]);
+    }
+
+    setIsFirstRender(false);
+    setIsSearch(true);
+    setOffset(0);
+  }, []);
+
+  const handleRender = useCallback(async () => {
+    if (isSearch) {
+      return null;
+    }
+
+    return handlePokemons();
+  }, [isSearch, handlePokemons]);
+
+  useEffect(() => {
+    handlePokemons();
+  }, []);
+
   return (
-    <Container>
-      <Header>
-        <Title>Pokédex</Title>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <Header>
+          <Title>Pokédex</Title>
 
-        <PokeballImage width={400} height={260} />
+          <PokeballImage width={400} height={260} />
 
-        <SubTitle>
-          Search for a Pokémon by name or using its National Pokédex number
-        </SubTitle>
+          <SubTitle>
+            Search for a Pokémon by name or using its National Pokédex number
+          </SubTitle>
 
-        <InputHome />
-      </Header>
+          <InputHome handlePokemonSearch={handlePokemonSearch} />
+        </Header>
 
-      <View style={{marginTop: 32}} />
+        <View style={{marginTop: 32}} />
 
-      <FlatList
-        data={pokemons}
-        keyExtractor={item => String(item.id)}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        renderItem={renderItem}
-        contentContainerStyle={{
-          paddingHorizontal: 24,
-        }}
-      />
-    </Container>
+        {isPokemonNotFound && <NotFoundPokemon />}
+
+        {isError && <ErrorHandler />}
+
+        {!isError && !isPokemonNotFound && (
+          <Skeleton loading={isFirstRender} skeleton={<Loader />}>
+            {pokemons && (
+              <FlatList
+                data={pokemons}
+                keyExtractor={item => String(item.id)}
+                numColumns={2}
+                showsVerticalScrollIndicator={false}
+                renderItem={renderItem}
+                contentContainerStyle={{
+                  paddingHorizontal: 24,
+                }}
+                onEndReached={handleRender}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={<Loading isLoading={loading} />}
+              />
+            )}
+          </Skeleton>
+        )}
+
+        {(isPokemonNotFound || isSearch || isError) && (
+          <SyncButton onPress={getPokemonsBySyncButton}>
+            <SyncIcon name="refresh-cw" size={24} />
+          </SyncButton>
+        )}
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 
