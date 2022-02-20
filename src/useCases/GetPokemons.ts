@@ -9,15 +9,19 @@ export interface GetPokemonUseCaseProps {
 async function getPokemonsUseCase({
   offset,
   limit,
-}: GetPokemonUseCaseProps): Promise<GetPokemonsResponseDTO> {
-  const {data} = await api.get<GetPokemonsResponseDTO>('pokemon', {
+}: GetPokemonUseCaseProps): Promise<GetPokemonsResponseDTO | null> {
+  const {data, status} = await api.get<GetPokemonsResponseDTO>('pokemon', {
     params: {
       offset,
       limit,
     },
   });
 
-  return data;
+  if (status === 200) {
+    return data;
+  }
+
+  return null;
 }
 
 export default getPokemonsUseCase;
