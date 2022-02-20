@@ -2,6 +2,10 @@ import {TextInput} from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
 
+interface ButtonProps {
+  isDisabled: boolean;
+}
+
 export const Container = styled.View`
   background-color: ${({theme}) => theme.COLORS.SHAPE};
   flex-direction: row;
@@ -20,8 +24,9 @@ export const InputField = styled(TextInput).attrs(({theme}) => ({
 
 export const InputButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
-})`
-  background-color: ${({theme}) => theme.COLORS.TITLE};
+})<ButtonProps>`
+  background-color: ${({theme, isDisabled}) =>
+    isDisabled ? theme.COLORS.TITLE_LIGHT : theme.COLORS.TITLE};
   padding: 16px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
