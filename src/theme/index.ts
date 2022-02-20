@@ -32,7 +32,7 @@ export default {
       NORMAL: '#A8A77A',
       POISON: '#A33EA1',
       PSYCHIC: '#F95587',
-    },
+    } as POKEMON_TYPES,
   },
 
   FONTS: {
@@ -41,3 +41,7 @@ export default {
     BOLD: 'Poppins-Bold',
   },
 };
+
+export interface POKEMON_TYPES {
+  [tipo: string]: string;
+}
