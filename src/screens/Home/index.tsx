@@ -136,7 +136,7 @@ const Home: React.FC = () => {
                   paddingHorizontal: 24,
                 }}
                 onEndReached={handleRender}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={1}
                 ListFooterComponent={<Loading isLoading={loading} />}
               />
             )}
