@@ -3,6 +3,7 @@ import {formatFirstLetterToUpperCase} from '@/util';
 import React, {useMemo} from 'react';
 import {Image, TouchableOpacityProps} from 'react-native';
 import {Container, TextContainer, Name, PokemonNumber, styles} from './styles';
+import FastImage from 'react-native-fast-image';
 
 interface Props extends TouchableOpacityProps {
   index: number;
@@ -31,11 +32,12 @@ const PokemonCard: React.FC<Props> = ({data, index, ...rest}) => {
       {...rest}
       activeOpacity={0.7}
       style={styles.shadow}>
-      <Image
+      <FastImage
+        style={{width: 120, height: 120}}
         source={{
           uri: image,
+          priority: FastImage.priority.high,
         }}
-        style={{width: 120, height: 120}}
       />
 
       <TextContainer>
