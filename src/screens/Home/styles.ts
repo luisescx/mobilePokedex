@@ -13,10 +13,9 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: 20%;
   align-items: flex-start;
   justify-content: space-between;
-  margin-top: 48px;
+  margin-top: ${getBottomSpace()}px;
   padding: 0 24px;
 `;
 
