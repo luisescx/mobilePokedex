@@ -1,5 +1,5 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {Alert} from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {Alert, TextInput} from 'react-native';
 import {Container, InputButton, InputField, InputIcon} from './styles';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 
 const InputHome: React.FC<Props> = ({handlePokemonSearch}) => {
   const [pokemon, setPokemon] = useState('');
+  const inputRef = useRef<TextInput>(null);
 
   const isDisabled = useMemo(() => {
     return pokemon === '';
@@ -21,6 +22,7 @@ const InputHome: React.FC<Props> = ({handlePokemonSearch}) => {
       return;
     }
 
+    inputRef.current!.blur();
     setPokemon('');
     handlePokemonSearch(pokemon);
   }, [handlePokemonSearch, pokemon]);
@@ -28,6 +30,7 @@ const InputHome: React.FC<Props> = ({handlePokemonSearch}) => {
   return (
     <Container>
       <InputField
+        ref={inputRef}
         placeholder="Name or Number"
         value={pokemon}
         onChangeText={setPokemon}
