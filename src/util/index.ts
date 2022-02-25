@@ -6,3 +6,11 @@ export function getPokemonIdByUrlString(url: string) {
   const urlList = url.split('/');
   return Number(urlList[urlList.length - 2]);
 }
+
+export function formatPokemonNumber(pkNumber: number) {
+  return String(pkNumber).length >= 3
+    ? pkNumber
+    : String(pkNumber).length === 2
+    ? `0${pkNumber}`
+    : `00${pkNumber}`;
+}
