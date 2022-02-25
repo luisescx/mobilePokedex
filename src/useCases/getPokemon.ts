@@ -1,6 +1,7 @@
 import {Pokemon} from '@/common/interface/pokemon';
 import {PokemonDTO} from '@/dtos/pokemon';
 import api from '@/services/api';
+import {formatFirstLetterToUpperCase, formatPokemonNumber} from '@/util';
 
 async function getPokemonUseCase(
   pokemonId: number | string,
@@ -10,7 +11,8 @@ async function getPokemonUseCase(
   if (status === 200) {
     const pokemon = {
       id: data.id,
-      name: data.name,
+      pokemonNumber: formatPokemonNumber(data.id),
+      name: formatFirstLetterToUpperCase(data.name),
       image: data.sprites.other['official-artwork'].front_default,
     } as Pokemon;
 
