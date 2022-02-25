@@ -1,10 +1,10 @@
 import {Pokemon} from '@/common/interface/pokemon';
-import {formatFirstLetterToUpperCase} from '@/util';
-import React, {useMemo} from 'react';
-import {Image, TouchableOpacityProps} from 'react-native';
+import React, {useCallback} from 'react';
+import {TouchableOpacityProps} from 'react-native';
 import {Container, TextContainer, Name, PokemonNumber, styles} from './styles';
 import FastImage from 'react-native-fast-image';
 import pokemonDefaultImage from '../../assets/images/pokemonDefault.png';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props extends TouchableOpacityProps {
   index: number;
@@ -12,22 +12,18 @@ interface Props extends TouchableOpacityProps {
 }
 
 const PokemonCard: React.FC<Props> = ({data, index, ...rest}) => {
-  const {id, image, name, types} = data;
+  const {id, image, name, types, pokemonNumber} = data;
+  const navigation = useNavigation();
 
-  const nameFormatted = useMemo(() => {
-    return formatFirstLetterToUpperCase(name);
-  }, [name]);
-
-  const pokemonNumber = useMemo(() => {
-    return String(id).length >= 3
-      ? id
-      : String(id).length === 2
-      ? `0${id}`
-      : `00${id}`;
-  }, [id]);
+  const handleNavigation = useCallback(() => {
+    navigation.navigate('detailScreen', {
+      id,
+    });
+  }, [navigation, id]);
 
   return (
     <Container
+      onPress={handleNavigation}
       index={index}
       type={types[0]}
       {...rest}
@@ -39,7 +35,7 @@ const PokemonCard: React.FC<Props> = ({data, index, ...rest}) => {
       />
 
       <TextContainer>
-        <Name>{nameFormatted}</Name>
+        <Name>{name}</Name>
         <PokemonNumber>{pokemonNumber}</PokemonNumber>
       </TextContainer>
     </Container>
