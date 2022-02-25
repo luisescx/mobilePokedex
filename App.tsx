@@ -1,12 +1,13 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {ThemeProvider} from 'styled-components/native';
 import theme from '@/theme/index';
-import Home from '@/screens/Home';
+import {Routes} from '@/routes';
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <Routes />
     </ThemeProvider>
   );
 };
