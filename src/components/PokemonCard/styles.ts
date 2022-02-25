@@ -44,12 +44,12 @@ export const TextContainer = styled.View`
 
 export const Name = styled.Text`
   font-family: ${({theme}) => theme.FONTS.BOLD};
-  color: ${({theme}) => theme.COLORS.TEXT_LIGHT};
+  color: ${({theme}) => theme.COLORS.TITLE};
   font-size: 16px;
 `;
 
 export const PokemonNumber = styled.Text`
   font-family: ${({theme}) => theme.FONTS.REGULAR};
-  color: ${({theme}) => theme.COLORS.TEXT_LIGHT};
+  color: ${({theme}) => theme.COLORS.TITLE};
   font-size: 16px;
 `;
