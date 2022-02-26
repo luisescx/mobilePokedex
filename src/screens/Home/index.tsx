@@ -11,7 +11,13 @@ import {
   SyncButton,
   SyncIcon,
 } from './styles';
-import {View, FlatList, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {
+  View,
+  FlatList,
+  TouchableWithoutFeedback,
+  Keyboard,
+  StatusBar,
+} from 'react-native';
 import PokemonCard from '@/components/PokemonCard';
 import getPokemonUseCase from '@/useCases/getPokemon';
 import {getPokemonIdByUrlString} from '@/util';
@@ -20,6 +26,7 @@ import Skeleton from '@/components/Skeleton';
 import Loader from '@/components/Skeleton/Loader';
 import ErrorHandler from '@/components/ErrorHandler';
 import NotFoundPokemon from '@/components/NotFoundPokemon';
+import {useTheme} from 'styled-components/native';
 
 const Home: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -29,6 +36,7 @@ const Home: React.FC = () => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isError, setIsError] = useState(false);
   const [isPokemonNotFound, setIsPokemonNotFound] = useState(false);
+  const theme = useTheme();
 
   const handlePokemons = useCallback(async () => {
     setLoading(true);
@@ -69,6 +77,8 @@ const Home: React.FC = () => {
 
   const getPokemonsBySyncButton = useCallback(async () => {
     setIsFirstRender(true);
+    setIsSearch(false);
+    setIsPokemonNotFound(false);
 
     await handlePokemons();
   }, [handlePokemons]);
@@ -105,6 +115,13 @@ const Home: React.FC = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
+        <StatusBar
+          animated={true}
+          translucent={true}
+          barStyle="dark-content"
+          backgroundColor={theme.COLORS.BACKGROUND}
+        />
+
         <Header>
           <Title>Pokédex</Title>
 
