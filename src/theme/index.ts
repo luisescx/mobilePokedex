@@ -7,6 +7,7 @@ export default {
     TEXT_LIGHT: '#FAFBFB',
     TITLE: '#2E3057',
     TITLE_LIGHT: `${'rgba(46, 48, 87, 0.5)'}`,
+    TITLE_LIGHT_SECONDARY: `${'rgba(46, 48, 87, 0.3)'}`,
 
     SUCCESS: '#12A454',
     SUCCESS_LIGHT: `${'rgba(18, 164, 84, 0.3)'}`,
