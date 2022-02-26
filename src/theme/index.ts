@@ -22,7 +22,7 @@ export default {
       STEEL: '#7F7FD7',
       WATER: '#ACC2F2',
       BUG: '#B9C657',
-      DARK: '#88512D',
+      DARK: '#947029',
       DRAGON: '#A481FD',
       ELECTRIC: '#F9DF77',
       FAIRY: '#D685AD',
@@ -47,5 +47,5 @@ export default {
 };
 
 export interface POKEMON_TYPES {
-  [tipo: string]: string;
+  [type: string]: string;
 }
