@@ -12,14 +12,12 @@ interface Props extends TouchableOpacityProps {
 }
 
 const PokemonCard: React.FC<Props> = ({data, index, ...rest}) => {
-  const {id, image, name, types, pokemonNumber} = data;
+  const {image, name, types, pokemonNumber} = data;
   const navigation = useNavigation();
 
   const handleNavigation = useCallback(() => {
-    navigation.navigate('detailScreen', {
-      id,
-    });
-  }, [navigation, id]);
+    navigation.navigate('detailScreen', {pokemon: data});
+  }, [navigation, data]);
 
   return (
     <Container
