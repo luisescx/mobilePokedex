@@ -8,7 +8,7 @@ export const BackButton = ({...rest}: TouchableOpacityProps) => {
 
   return (
     <TouchableOpacity {...rest} activeOpacity={0.7}>
-      <Icon name="chevron-left" size={28} color={theme.COLORS.SHAPE} />
+      <Icon name="chevron-left" size={28} color={theme.COLORS.TITLE} />
     </TouchableOpacity>
   );
 };
