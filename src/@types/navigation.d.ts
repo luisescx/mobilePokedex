@@ -1,5 +1,7 @@
+import {Pokemon} from '@/common/interface/pokemon';
+
 export type DetailScreenNavigationProps = {
-  id: number;
+  pokemon: Pokemon;
 };
 
 export declare global {
