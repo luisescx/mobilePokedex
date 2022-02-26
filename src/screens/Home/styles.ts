@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import Pokeball from '@/assets/images/pokeball.svg';
-import {getBottomSpace, getStatusBarHeight} from 'react-native-iphone-x-helper';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import {TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -8,7 +8,6 @@ export const Container = styled.View`
   flex: 1;
   background-color: ${({theme}) => theme.COLORS.BACKGROUND};
   padding: 12px 0px;
-  margin-bottom: ${getBottomSpace()}px;
 `;
 
 export const Header = styled.View`
