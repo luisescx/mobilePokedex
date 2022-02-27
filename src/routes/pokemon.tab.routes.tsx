@@ -10,6 +10,17 @@ import Pokeball from '@/assets/images/pokeball.svg';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
+const os = Platform.select({
+  android: {
+    height: 60,
+    paddingVertical: 0,
+  },
+  ios: {
+    height: 70,
+    paddingVertical: 5,
+  },
+});
+
 const PokemonTabRoutes: React.FC = () => {
   const theme = useTheme();
   return (
@@ -21,8 +32,8 @@ const PokemonTabRoutes: React.FC = () => {
         tabBarShowLabel: true,
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
-          height: 80,
-          paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+          height: os?.height,
+          paddingVertical: os?.paddingVertical,
           backgroundColor: theme.COLORS.TEXT_LIGHT,
         },
       }}>
