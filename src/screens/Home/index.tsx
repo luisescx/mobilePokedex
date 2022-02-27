@@ -113,60 +113,60 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
-        <StatusBar
-          animated={true}
-          translucent={true}
-          barStyle="dark-content"
-          backgroundColor={theme.COLORS.BACKGROUND}
-        />
+    <Container>
+      <StatusBar
+        animated={true}
+        translucent={true}
+        barStyle="dark-content"
+        backgroundColor={theme.COLORS.BACKGROUND}
+      />
 
-        <Header>
-          <Title>Pokédex</Title>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <Header>
+            <Title>Pokédex</Title>
 
-          <PokeballImage width={400} height={260} />
+            <PokeballImage width={400} height={260} />
 
-          <SubTitle>
-            Search for a Pokémon by name or using its National Pokédex number
-          </SubTitle>
+            <SubTitle>
+              Search for a Pokémon by name or using its National Pokédex number
+            </SubTitle>
 
-          <InputHome handlePokemonSearch={handlePokemonSearch} />
-        </Header>
+            <InputHome handlePokemonSearch={handlePokemonSearch} />
+          </Header>
+          <View style={{marginTop: 32}} />
+          {isPokemonNotFound && <NotFoundPokemon />}
 
-        <View style={{marginTop: 32}} />
+          {isError && <ErrorHandler />}
+        </View>
+      </TouchableWithoutFeedback>
 
-        {isPokemonNotFound && <NotFoundPokemon />}
+      {!isError && !isPokemonNotFound && (
+        <Skeleton loading={isFirstRender} skeleton={<Loader />}>
+          {pokemons && (
+            <FlatList
+              data={pokemons}
+              keyExtractor={item => String(item.id)}
+              numColumns={2}
+              showsVerticalScrollIndicator={false}
+              renderItem={renderItem}
+              contentContainerStyle={{
+                paddingHorizontal: 24,
+              }}
+              onEndReached={handleRender}
+              onEndReachedThreshold={1}
+              ListFooterComponent={<Loading isLoading={loading} />}
+            />
+          )}
+        </Skeleton>
+      )}
 
-        {isError && <ErrorHandler />}
-
-        {!isError && !isPokemonNotFound && (
-          <Skeleton loading={isFirstRender} skeleton={<Loader />}>
-            {pokemons && (
-              <FlatList
-                data={pokemons}
-                keyExtractor={item => String(item.id)}
-                numColumns={2}
-                showsVerticalScrollIndicator={false}
-                renderItem={renderItem}
-                contentContainerStyle={{
-                  paddingHorizontal: 24,
-                }}
-                onEndReached={handleRender}
-                onEndReachedThreshold={1}
-                ListFooterComponent={<Loading isLoading={loading} />}
-              />
-            )}
-          </Skeleton>
-        )}
-
-        {(isPokemonNotFound || isSearch || isError) && (
-          <SyncButton onPress={getPokemonsBySyncButton}>
-            <SyncIcon name="refresh-cw" size={24} />
-          </SyncButton>
-        )}
-      </Container>
-    </TouchableWithoutFeedback>
+      {(isPokemonNotFound || isSearch || isError) && (
+        <SyncButton onPress={getPokemonsBySyncButton}>
+          <SyncIcon name="refresh-cw" size={24} />
+        </SyncButton>
+      )}
+    </Container>
   );
 };
 
