@@ -1,13 +1,18 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import LottieView from 'lottie-react-native';
 import {Container} from './styles';
 
 interface Props {
   isLoading: boolean;
+  height?: number;
 }
 
-const Loading: React.FC<Props> = ({isLoading: isloading}) => {
-  if (!isloading) {
+const Loading: React.FC<Props> = ({isLoading, height}) => {
+  const heightValue = useMemo(() => {
+    return height ? height : 40;
+  }, [height]);
+
+  if (!isLoading) {
     return null;
   }
 
@@ -19,7 +24,7 @@ const Loading: React.FC<Props> = ({isLoading: isloading}) => {
         loop
         resizeMode="contain"
         style={{
-          height: 40,
+          height: heightValue,
         }}
       />
     </Container>
