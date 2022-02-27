@@ -26,6 +26,8 @@ async function getDetailPokemonUseCase(
       species: data.species,
     } as Pokemon;
 
+    const pokemonSpecieId = getPokemonIdByUrlString(data.species.url);
+    pokemon.species.id = pokemonSpecieId;
     pokemon.stats = getStats(data.stats);
 
     pokemon.types = [];
@@ -34,7 +36,6 @@ async function getDetailPokemonUseCase(
       pokemon.types.push(tp.type.name);
     });
 
-    const pokemonSpecieId = getPokemonIdByUrlString(data.species.url);
     const pokemonSpecies = await getPokemonSpeciesUseCase(pokemonSpecieId);
 
     pokemon.about = pokemonSpecies?.about!;

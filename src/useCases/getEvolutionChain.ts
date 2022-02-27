@@ -1,7 +1,11 @@
 import {EvolvesTo} from '@/common/interface/pokemon';
 import {EvolutionChainDTO, EvolvesToDTO} from '@/dtos/pokemon';
 import api from '@/services/api';
-import {getPokemonIdByUrlString} from '@/util';
+import {
+  formatFirstLetterToUpperCase,
+  formatPokemonNumber,
+  getPokemonIdByUrlString,
+} from '@/util';
 import getPokemonImage from './getPokemonImage';
 
 async function getEvolutionChainUseCase(evolutionChainId: number | string) {
@@ -17,7 +21,8 @@ async function getEvolutionChainUseCase(evolutionChainId: number | string) {
     evolutions.push({
       id,
       image,
-      name: data.chain.species.name,
+      pokemonNumber: formatPokemonNumber(id),
+      name: formatFirstLetterToUpperCase(data.chain.species.name),
     });
 
     createEvolvesToList(data.chain.evolves_to, evolutions);
@@ -36,7 +41,8 @@ function createEvolvesToList(evolutionChain: EvolvesToDTO[], newList: any[]) {
     newList.push({
       id,
       image,
-      name: pkChain.species.name,
+      name: formatFirstLetterToUpperCase(pkChain.species.name),
+      pokemonNumber: formatPokemonNumber(id),
     });
 
     if (pkChain.evolves_to) {
