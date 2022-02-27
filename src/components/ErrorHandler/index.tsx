@@ -1,16 +1,22 @@
 import React from 'react';
 import {Container, Title, ErrorImage, SubTitle} from './styles';
 
-const ErrorHandler: React.FC = () => {
+interface Props {
+  hideImage?: boolean;
+}
+
+const ErrorHandler: React.FC<Props> = ({hideImage}) => {
   return (
-    <Container>
+    <Container hideImage={hideImage}>
       <Title>Error</Title>
       <SubTitle>
         An error ocurred while{'\n'}fetching data from the API,{'\n'}please try
         again later.
       </SubTitle>
 
-      <ErrorImage source={require('../../assets/images/errorImage.png')} />
+      {!hideImage && (
+        <ErrorImage source={require('../../assets/images/errorImage.png')} />
+      )}
     </Container>
   );
 };
