@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, FlatList, StatusBar} from 'react-native';
+import {FlatList, StatusBar} from 'react-native';
 import {DetailScreenNavigationProps} from '@/@types/navigation';
 import {Pokemon} from '@/common/interface/pokemon';
 import {BackButton} from '@/components/BackButton';
@@ -42,6 +42,7 @@ import {formatFirstLetterToUpperCase} from '@/util';
 import ErrorHandler from '@/components/ErrorHandler';
 import Loading from '@/components/Loading';
 import Error from '../Error';
+import {useFavorites} from '@/hooks/useFavorites';
 
 const Detail: React.FC = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
@@ -50,7 +51,7 @@ const Detail: React.FC = () => {
   const [isError, setIsError] = useState(false);
   const [IsScreenError, setScreenError] = useState(false);
   const [activeTab, setActiveTab] = useState('about');
-
+  const {handleFavorites, findFavoritePokemonById} = useFavorites();
   const theme = useTheme();
   const route = useRoute();
   const navigation = useNavigation();
@@ -58,18 +59,9 @@ const Detail: React.FC = () => {
 
   const handleFavorite = useCallback(() => {
     setFavorite(oldState => !oldState);
-
-    if (isFavorite) {
-      Alert.alert(
-        `Removed ${pokemonParams.pokemonNumber}-${pokemonParams.name} from My Pokemons list`,
-      );
-      return;
-    }
-
-    Alert.alert(
-      `Added ${pokemonParams.pokemonNumber}-${pokemonParams.name} to My Pokemons list`,
-    );
-  }, [isFavorite, pokemonParams.name, pokemonParams.pokemonNumber]);
+    // console.log(pokemonParams);
+    handleFavorites(pokemonParams);
+  }, [pokemonParams, handleFavorites]);
 
   const handleGoBack = useCallback(() => {
     navigation.goBack();
@@ -116,6 +108,11 @@ const Detail: React.FC = () => {
     [pokemon],
   );
 
+  const isPokemonFavorite = useCallback(async () => {
+    const favorite = await findFavoritePokemonById(pokemonParams.id);
+    setFavorite(favorite);
+  }, [findFavoritePokemonById, pokemonParams.id]);
+
   useEffect(() => {
     const getPokemon = async () => {
       const pk = await getDetailPokemonUseCase(pokemonParams.id);
@@ -136,6 +133,7 @@ const Detail: React.FC = () => {
       setScreenError(true);
     }
 
+    isPokemonFavorite();
     getPokemon();
   }, []);
 
