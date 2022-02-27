@@ -9,7 +9,7 @@ export function getPokemonIdByUrlString(url: string) {
 
 export function formatPokemonNumber(pkNumber: number) {
   return String(pkNumber).length >= 3
-    ? pkNumber
+    ? String(pkNumber)
     : String(pkNumber).length === 2
     ? `0${pkNumber}`
     : `00${pkNumber}`;
