@@ -14,3 +14,7 @@ export function formatPokemonNumber(pkNumber: number) {
     ? `0${pkNumber}`
     : `00${pkNumber}`;
 }
+
+export function removeBreakLines(text: string) {
+  return text.replace(/(\r\n|\n|\r|\f)/gm, ' ');
+}
