@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import Bug from '@/assets/images/pokemonTypes/bug.svg';
 import Dark from '@/assets/images/pokemonTypes/dark.svg';
@@ -22,64 +22,81 @@ import {StyleSheet} from 'react-native';
 
 interface Props {
   typeName: string;
+  size?: number;
 }
 
-const TypeImage: React.FC<Props> = ({typeName}) => {
+const TypeImage: React.FC<Props> = ({typeName, size}) => {
+  const imageSize = useMemo(() => {
+    return size ? size : 30;
+  }, [size]);
+
   return (
     <>
       {typeName === 'bug' && (
-        <Bug width={30} height={30} style={styles.container} />
+        <Bug width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'dark' && (
-        <Dark width={30} height={30} style={styles.container} />
+        <Dark width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'dragon' && (
-        <Dragon width={30} height={30} style={styles.container} />
+        <Dragon width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'electric' && (
-        <Electric width={30} height={30} style={styles.container} />
+        <Electric
+          width={imageSize}
+          height={imageSize}
+          style={styles.container}
+        />
       )}
       {typeName === 'fairy' && (
-        <Fairy width={30} height={30} style={styles.container} />
+        <Fairy width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'fighting' && (
-        <Fighting width={30} height={30} style={styles.container} />
+        <Fighting
+          width={imageSize}
+          height={imageSize}
+          style={styles.container}
+        />
       )}
       {typeName === 'fire' && (
-        <Fire width={30} height={30} style={styles.container} />
+        <Fire width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'flying' && (
-        <Flying width={30} height={30} style={styles.container} />
+        <Flying width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'ghost' && (
-        <Ghost width={30} height={30} style={styles.container} />
+        <Ghost width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'grass' && (
-        <Grass width={30} height={30} style={styles.container} />
+        <Grass width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'ground' && (
-        <Ground width={30} height={30} style={styles.container} />
+        <Ground width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'ice' && (
-        <Ice width={30} height={30} style={styles.container} />
+        <Ice width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'normal' && (
-        <Normal width={30} height={30} style={styles.container} />
+        <Normal width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'poison' && (
-        <Poison width={30} height={30} style={styles.container} />
+        <Poison width={imageSize} height={imageSize} style={styles.container} />
       )}
       {typeName === 'psychic' && (
-        <Psychic width={30} height={30} style={styles.container} />
+        <Psychic
+          width={imageSize}
+          height={imageSize}
+          style={styles.container}
+        />
       )}
       {typeName === 'steel' && (
-        <Steel width={30} height={30} style={{marginLeft: 4}} />
+        <Steel width={imageSize} height={imageSize} style={{marginLeft: 4}} />
       )}
       {typeName === 'water' && (
-        <Water width={30} height={30} style={{marginLeft: 4}} />
+        <Water width={imageSize} height={imageSize} style={{marginLeft: 4}} />
       )}
       {typeName === 'rock' && (
-        <Rock width={30} height={30} style={{marginLeft: 4}} />
+        <Rock width={imageSize} height={imageSize} style={{marginLeft: 4}} />
       )}
     </>
   );
