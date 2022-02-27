@@ -59,7 +59,6 @@ const Detail: React.FC = () => {
 
   const handleFavorite = useCallback(() => {
     setFavorite(oldState => !oldState);
-    // console.log(pokemonParams);
     handleFavorites(pokemonParams);
   }, [pokemonParams, handleFavorites]);
 
