@@ -32,9 +32,10 @@ function FavoritesProvider({children}: FavoritePokemonProviderProps) {
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(newFavoritesList));
 
-      setFavorite(newFavoritesList);
+      setFavorite(orderListById(newFavoritesList));
 
       Alert.alert(
+        'My Pokemons',
         `Added ${newPokemon.pokemonNumber}-${newPokemon.name} to My Pokemons list`,
       );
     } catch (error) {
@@ -55,9 +56,10 @@ function FavoritesProvider({children}: FavoritePokemonProviderProps) {
       );
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(newFavoritesList));
-      setFavorite(newFavoritesList);
+      setFavorite(orderListById(newFavoritesList));
 
       Alert.alert(
+        'My Pokemons',
         `Removed ${newPokemon.pokemonNumber}-${newPokemon.name} from My Pokemons list`,
       );
     } catch (error) {
@@ -87,7 +89,7 @@ function FavoritesProvider({children}: FavoritePokemonProviderProps) {
     try {
       const storageFavoritesPokemon = await getPokemons();
 
-      setFavorite(storageFavoritesPokemon);
+      setFavorite(orderListById(storageFavoritesPokemon));
     } catch (error) {
       Alert.alert(
         'Error',
@@ -112,6 +114,12 @@ function FavoritesProvider({children}: FavoritePokemonProviderProps) {
 
     return storageFavoritesPokemon.some(
       favoritePokemon => favoritePokemon.id === pokemonId,
+    );
+  }
+
+  function orderListById(pokemonsList: Pokemon[]) {
+    return pokemonsList.sort((a, b) =>
+      a.id <= b.id ? -1 : a.id > b.id ? 1 : 0,
     );
   }
 
