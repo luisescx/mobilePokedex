@@ -1,11 +1,21 @@
-import styled from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 import {Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-export const Container = styled.View`
+interface Props {
+  hideImage?: boolean;
+}
+
+export const Container = styled.View<Props>`
+  ${({hideImage}) =>
+    hideImage &&
+    css`
+      flex: 1;
+    `};
+
   align-items: center;
   justify-content: center;
-  margin-top: 48px;
+  margin-top: ${({hideImage}) => (hideImage ? 0 : 48)}px;
 `;
 
 export const Title = styled.Text`

@@ -36,6 +36,7 @@ const InputHome: React.FC<Props> = ({handlePokemonSearch}) => {
         onChangeText={setPokemon}
         autoCapitalize="none"
         onSubmitEditing={handleSearch}
+        autoCorrect={false}
         returnKeyType="send"
       />
 
