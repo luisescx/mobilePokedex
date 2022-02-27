@@ -3,12 +3,15 @@ import React from 'react';
 import {ThemeProvider} from 'styled-components/native';
 import theme from '@/theme/index';
 import {Routes} from '@/routes';
+import {FavoritesProvider} from '@/contexts/FavoritesProvider';
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Routes />
-    </ThemeProvider>
+    <FavoritesProvider>
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider>
+    </FavoritesProvider>
   );
 };
 
