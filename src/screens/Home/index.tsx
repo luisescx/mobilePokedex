@@ -40,8 +40,7 @@ const Home: React.FC = () => {
 
   const handlePokemons = useCallback(async () => {
     setLoading(true);
-
-    const data = await getPokemonsUseCase({offset: offset, limit: 20});
+    const data = await getPokemonsUseCase({offset, limit: 20});
 
     if (data?.results) {
       const resultPokemons = isSearch ? [] : [...pokemons];
@@ -55,7 +54,7 @@ const Home: React.FC = () => {
       }
 
       setPokemons(resultPokemons);
-      setOffset(oldValue => oldValue + 20);
+      setOffset(offset + 20);
       setIsSearch(false);
       setIsFirstRender(false);
       setLoading(false);
