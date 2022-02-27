@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const Title = styled.Text<Props>`
-  font-size: 18px;
+  font-size: 16px;
   font-family: ${({theme}) => theme.FONTS.BOLD};
   color: ${({theme, isActive}) =>
     isActive ? theme.COLORS.TITLE : theme.COLORS.TITLE_LIGHT_SECONDARY};
