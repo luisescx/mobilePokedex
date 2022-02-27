@@ -20,6 +20,7 @@ export interface Stats {
 
 export interface EvolvesTo {
   id: number;
+  pokemonNumber: string;
   name: string;
   image: string;
 }
@@ -27,4 +28,5 @@ export interface EvolvesTo {
 export interface Species {
   name: string;
   url: string;
+  id: number;
 }
