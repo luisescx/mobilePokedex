@@ -7,6 +7,10 @@ export const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain',
   },
+  flatList: {
+    paddingHorizontal: 24,
+    flexGrow: 1,
+  },
 });
 
 export const Container = styled.View`
@@ -20,7 +24,6 @@ export const ContainerImage = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  margin-top: 48px;
 `;
 
 export const Title = styled.Text`
