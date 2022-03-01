@@ -12,14 +12,14 @@ import {
   Title,
   SubTitle,
 } from './styles';
-import NofavoritesImage from '@/assets/images/pikachuPhone.png';
+import NoFavoritesImage from '@/assets/images/pikachuPhone.png';
 
 const NoPokemonsAdded: React.FC = () => {
   return (
     <ContainerImage>
       <Title>You haven't added any{'\n'}Pokemons yet.</Title>
       <SubTitle>Go catch some Pokemons on{'\n'}the Home screen</SubTitle>
-      <NotFavoritesImage source={NofavoritesImage} style={styles.image} />
+      <NotFavoritesImage source={NoFavoritesImage} style={styles.image} />
     </ContainerImage>
   );
 };
