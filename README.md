@@ -33,7 +33,7 @@ foi utilizada a API pública <a href="https://pokeapi.co/">Poké API</a> para o 
 <ul>
   <li>Navegação entre páginas</li>
   <li>Async Storage</li>
-  <li>Criação de compoentes com Styled Components</li>
+  <li>Criação de componentes com Styled Components</li>
   <li>Loading feito com Lottie</li>
   <li>Consumo de API</li>
 </ul>
